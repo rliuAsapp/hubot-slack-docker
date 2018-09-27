@@ -17,7 +17,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install coffee-script, hubot
 RUN npm install -g yo@${YO_VERSION} \
-        coffee-script@${COFFEE_SCRIPT} \
+        coffeescript@${COFFEE_SCRIPT} \
         generator-hubot@${HUBOT_VERSION}
 
 # Working enviroment
@@ -48,10 +48,35 @@ RUN npm install hubot-victory@1.5.3 \
  && (cat external-scripts.json && echo '["hubot-victory"]') | jq -s add > external-scripts.json.new \
  && mv external-scripts.json.new external-scripts.json
 
+# Install hubot-circleci
+RUN npm install hubot-circleci \
+ && (cat external-scripts.json && echo '["hubot-circleci"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
+
+# Install hubot-circleci
+RUN npm install hubot-circleci \
+ && (cat external-scripts.json && echo '["hubot-circleci"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
+
+# Install hubot-plusplus
+RUN npm install hubot-plusplus \
+ && (cat external-scripts.json && echo '["hubot-plusplus"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
+ 
 # Install sentimental (required redis-server)
-# RUN npm install hubot-sentimental@1.0.8 --save \
-#  && (cat external-scripts.json && echo '["hubot-sentimental"]') | jq -s add > external-scripts.json.new \
-# && mv external-scripts.json.new external-scripts.json
+RUN npm install hubot-sentimental@1.0.8 --save \
+ && (cat external-scripts.json && echo '["hubot-sentimental"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
+
+# Install hubot-jira-bot
+RUN npm install hubot-jira-bot --save \
+ && (cat external-scripts.json && echo '["hubot-jira-bot"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
+
+# Install hubot-relevant-xkcd
+RUN npm install hubot-relevant-xkcd --save \
+ && (cat external-scripts.json && echo '["hubot-relevant-xkcd"]') | jq -s add > external-scripts.json.new \
+ && mv external-scripts.json.new external-scripts.json
 
 # Entrypoint
 CMD ["/bin/sh", "-c", "cd ${BOTDIR} && bin/hubot --adapter slack"]
